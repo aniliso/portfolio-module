@@ -2,7 +2,6 @@
 
 namespace Modules\Portfolio\Presenters;
 
-
 use Modules\Core\Presenters\BasePresenter;
 
 class BrandPresenter extends BasePresenter

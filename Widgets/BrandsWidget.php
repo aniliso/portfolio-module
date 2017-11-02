@@ -15,6 +15,7 @@ class BrandsWidget
     }
 
     public function register($limit=10) {
-        return $this->brand->all()->where('status', 1)->take($limit)->sortBy('ordering');
+        $brands = $this->brand->all()->where('status', 1)->take($limit)->sortBy('ordering');
+        return view('portfolio::widgets.brand', compact('brands'))->render();
     }
 }
