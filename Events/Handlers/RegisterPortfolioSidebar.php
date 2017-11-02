@@ -17,13 +17,13 @@ class RegisterPortfolioSidebar extends AbstractAdminSidebar
     {
         $menu->group(trans('core::sidebar.content'), function (Group $group) {
             $group->item(trans('portfolio::portfolios.title.portfolios'), function (Item $item) {
-                $item->icon('fa fa-copy');
+                $item->icon('fa fa-cubes');
                 $item->weight(10);
                 $item->authorize(
-                     /* append */
+                /* append */
                 );
                 $item->item(trans('portfolio::portfolios.title.portfolios'), function (Item $item) {
-                    $item->icon('fa fa-copy');
+                    $item->icon('fa fa-cube');
                     $item->weight(0);
                     $item->append('admin.portfolio.portfolio.create');
                     $item->route('admin.portfolio.portfolio.index');
@@ -32,7 +32,7 @@ class RegisterPortfolioSidebar extends AbstractAdminSidebar
                     );
                 });
                 $item->item(trans('portfolio::categories.title.categories'), function (Item $item) {
-                    $item->icon('fa fa-copy');
+                    $item->icon('fa fa-sitemap');
                     $item->weight(0);
                     $item->append('admin.portfolio.category.create');
                     $item->route('admin.portfolio.category.index');
@@ -41,7 +41,7 @@ class RegisterPortfolioSidebar extends AbstractAdminSidebar
                     );
                 });
                 $item->item(trans('portfolio::brands.title.brands'), function (Item $item) {
-                    $item->icon('fa fa-copy');
+                    $item->icon('fa fa-tags');
                     $item->weight(0);
                     $item->append('admin.portfolio.brand.create');
                     $item->route('admin.portfolio.brand.index');
