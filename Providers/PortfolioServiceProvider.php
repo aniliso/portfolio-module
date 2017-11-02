@@ -30,6 +30,11 @@ class PortfolioServiceProvider extends ServiceProvider
     {
         $this->registerBindings();
 
+        $this->app->extend('asgard.ModulesList', function($app) {
+            array_push($app, 'portfolio');
+            return $app;
+        });
+
         $this->app['events']->listen(
             BuildingSidebar::class,
             $this->getSidebarClassForModule('Portfolio', RegisterPortfolioSidebar::class)
