@@ -26,6 +26,11 @@
                         </div>
                     @endforeach
 
+                    <div class="box-body">
+                        {!! Form::normalInput('website', trans('portfolio::portfolios.form.website'), $errors, $portfolio, ['placeholder'=>'https://www.projelinki.com']) !!}
+                        @mediaMultiple('portfolioImage', $portfolio, null, trans('portfolio::portfolios.form.images'))
+                    </div>
+
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
                         <button class="btn btn-default btn-flat" name="button" type="reset">{{ trans('core::core.button.reset') }}</button>
@@ -35,11 +40,12 @@
             </div> {{-- end nav-tabs-custom --}}
         </div>
         <div class="col-md-2">
+            @includeIf('portfolio::admin.portfolios.partials.settings')
             <div class="box">
                 <div class="box-body">
-                    {!! Form::normalSelect('category_id', trans('portfolio::categories.title.categories'), $errors, $selectCategories, $portfolio->category) !!}
+                    {!! Form::normalSelect('category_id', trans('portfolio::categories.title.categories'), $errors, $selectCategories, $portfolio->category->id) !!}
 
-                    {!! Form::normalSelect('brand_id', trans('portfolio::brands.title.brands'), $errors, $selectBrands, $portfolio->brand) !!}
+                    {!! Form::normalSelect('brand_id', trans('portfolio::brands.title.brands'), $errors, $selectBrands, $portfolio->brand->id) !!}
 
                     <div class="form-group{{ $errors->has("start_at") ? ' has-error' : '' }}">
                         {!! Form::label("start_at", trans('portfolio::portfolios.form.start_at').':') !!}
@@ -66,7 +72,7 @@
             </div>
             <div class="box">
                 <div class="box-body">
-                    @mediaMultiple('portfolioImage', $portfolio, null, trans('portfolio::portfolios.form.images'))
+                    @mediaSingle('portfolioLogo', $portfolio, null, trans('portfolio::portfolios.form.logo'))
                 </div>
             </div>
         </div>

@@ -1,8 +1,12 @@
 <?php
 
 return [
+  'category' => [
+      'index' => 'portfoy/kategoriler',
+      'slug'  => 'portfoy/kategori/{slug}'
+  ],
   'portfolio' => [
-      'index' => 'portfoy/index',
+      'index' => 'portfoyler',
       'slug'  => 'portfoy/{slug}'
   ],
   'brand' => [

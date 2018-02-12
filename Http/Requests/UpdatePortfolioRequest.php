@@ -15,8 +15,7 @@ class UpdatePortfolioRequest extends BaseFormRequest
             'brand_id'    => 'required|integer',
             'ordering'    => 'required|integer',
             'start_at'    => 'required|date_format:d.m.Y',
-            'end_at'      => 'required|date_format:d.m.Y',
-            'website'     => 'url'
+            'end_at'      => 'required|date_format:d.m.Y'
         ];
     }
 

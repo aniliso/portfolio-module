@@ -21,15 +21,16 @@ return [
         'title'            => 'Başlık',
         'slug'             => 'URL Yolu',
         'description'      => 'Açıklama',
-        'website'          => 'Proje Linki',
+        'website'          => 'Portföy Linki',
         'ordering'         => 'Sıralama',
         'status'           => 'Durum',
-        'start_at'         => 'Proje Tarihi (Başlangıç)',
-        'end_at'           => 'Proje Tarihi (Bitiş)',
+        'start_at'         => 'Başlangıç Tarihi',
+        'end_at'           => 'Bitiş Tarihi',
         'meta_data'        => 'Meta Verileri',
         'meta_title'       => 'Meta Başlık',
         'meta_description' => 'Meta Açıklama',
-        'images'           => 'Proje Resimleri'
+        'images'           => 'Resimler',
+        'logo'             => 'LOGO'
     ],
     'messages'         => [
     ],

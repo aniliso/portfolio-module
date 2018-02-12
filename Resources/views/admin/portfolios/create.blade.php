@@ -28,6 +28,7 @@
 
                     <div class="box-body">
                         {!! Form::normalInput('website', trans('portfolio::portfolios.form.website'), $errors, null, ['placeholder'=>'https://www.projelinki.com']) !!}
+                        @mediaMultiple('portfolioImage', null, null, trans('portfolio::portfolios.form.images'))
                     </div>
 
                     <div class="box-footer">
@@ -39,6 +40,7 @@
             </div> {{-- end nav-tabs-custom --}}
         </div>
         <div class="col-md-2">
+            @includeIf('portfolio::admin.portfolios.partials.settings')
             <div class="box">
                 <div class="box-body">
                     {!! Form::normalSelect('category_id', trans('portfolio::categories.title.categories'), $errors, $selectCategories, null) !!}
@@ -70,7 +72,7 @@
             </div>
             <div class="box">
                 <div class="box-body">
-                    @mediaMultiple('portfolioImage', null, null, trans('portfolio::portfolios.form.images'))
+                    @mediaSingle('portfolioLogo', null, null, trans('portfolio::portfolios.form.logo'))
                 </div>
             </div>
         </div>
