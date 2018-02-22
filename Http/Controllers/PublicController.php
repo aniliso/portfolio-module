@@ -4,6 +4,7 @@ namespace Modules\Portfolio\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
+use Modules\Portfolio\Repositories\CategoryRepository;
 use Modules\Portfolio\Repositories\PortfolioRepository;
 
 class PublicController extends BasePublicController
@@ -12,11 +13,16 @@ class PublicController extends BasePublicController
      * @var PortfolioRepository
      */
     private $portfolio;
+    /**
+     * @var CategoryRepository
+     */
+    private $category;
 
-    public function __construct(PortfolioRepository $portfolio)
+    public function __construct(PortfolioRepository $portfolio, CategoryRepository $category)
     {
         parent::__construct();
         $this->portfolio = $portfolio;
+        $this->category = $category;
     }
 
     /**
@@ -25,9 +31,10 @@ class PublicController extends BasePublicController
      */
     public function portfolioIndex()
     {
-        $portfolios = $this->portfolio->all();
+        $portfolios = $this->portfolio->all()->sortBy('ordering');
 
-        $this->seo()->setTitle(trans('themes::portfolio.title.portfolios'));
+        $this->seo()->setTitle(trans('themes::portfolio.title.meta_title'))
+                    ->setDescription(trans('themes::portfolio.title.meta_description'));
 
         return view('portfolio::index', compact('portfolios'));
     }
@@ -40,5 +47,16 @@ class PublicController extends BasePublicController
                     ->setDescription($portfolio->meta_description);
 
         return view('portfolio::show', compact('portfolio'));
+    }
+
+    public function categoryView($slug)
+    {
+        $category = $this->category->findBySlug($slug);
+        $portfolios = $category->portfolios()->get();
+
+        $this->seo()->setTitle($category->title)
+            ->setDescription($category->title);
+
+        return view('portfolio::category', compact('category', 'portfolios'));
     }
 }

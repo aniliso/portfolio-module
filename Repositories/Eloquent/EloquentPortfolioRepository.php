@@ -41,4 +41,8 @@ class EloquentPortfolioRepository extends EloquentBaseRepository implements Port
         return $model->delete();
     }
 
+    public function latest($amount = 10)
+    {
+        return $this->model->whereStatus(1)->orderBy('ordering', 'asc')->with('translations')->take($amount)->get();
+    }
 }

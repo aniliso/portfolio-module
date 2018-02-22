@@ -30,6 +30,7 @@
                         <thead>
                         <tr>
                             <th>Id</th>
+                            <th>{{ trans('portfolio::portfolios.form.ordering') }}</th>
                             <th>{{ trans('portfolio::brands.title.brands') }}</th>
                             <th>{{ trans('portfolio::categories.title.categories') }}</th>
                             <th>{{ trans('portfolio::portfolios.form.title') }}</th>
@@ -45,7 +46,10 @@
                                 {{ $portfolio->id }}
                             </td>
                             <td>
-                                {{ $portfolio->brand->title }}
+                                {{ $portfolio->ordering }}
+                            </td>
+                            <td>
+                                {{ $portfolio->brand->title ?? 'Bulunamadı' }}
                             </td>
                             <td>
                                 {{ $portfolio->category->title }}

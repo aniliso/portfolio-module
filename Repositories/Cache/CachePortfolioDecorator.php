@@ -13,4 +13,20 @@ class CachePortfolioDecorator extends BaseCacheDecorator implements PortfolioRep
         $this->entityName = 'portfolio.portfolios';
         $this->repository = $portfolio;
     }
+
+    /**
+     * Return the latest x blog posts
+     * @param int $amount
+     * @return Collection
+     */
+    public function latest($amount = 5)
+    {
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.latest.{$amount}", $this->cacheTime,
+                function () use ($amount) {
+                    return $this->repository->latest($amount);
+                }
+            );
+    }
 }

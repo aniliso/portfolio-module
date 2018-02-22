@@ -45,7 +45,7 @@
                 <div class="box-body">
                     {!! Form::normalSelect('category_id', trans('portfolio::categories.title.categories'), $errors, $selectCategories, null) !!}
 
-                    {!! Form::normalSelect('brand_id', trans('portfolio::brands.title.brands'), $errors, $selectBrands, null) !!}
+                    {!! Form::normalSelect('brand_id', trans('portfolio::brands.title.brands'), $errors, [''=>'Seçiniz']+$selectBrands, null) !!}
 
                     <div class="form-group{{ $errors->has("start_at") ? ' has-error' : '' }}">
                         {!! Form::label("start_at", trans('portfolio::portfolios.form.start_at').':') !!}

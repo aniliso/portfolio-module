@@ -12,7 +12,7 @@ class UpdatePortfolioRequest extends BaseFormRequest
     {
         return [
             'category_id' => 'required|integer',
-            'brand_id'    => 'required|integer',
+            //'brand_id'    => 'required|integer',
             'ordering'    => 'required|integer',
             'start_at'    => 'required|date_format:d.m.Y',
             'end_at'      => 'required|date_format:d.m.Y'
@@ -24,7 +24,7 @@ class UpdatePortfolioRequest extends BaseFormRequest
         return [
             'title'       => 'required|max:200',
             'slug'        => 'required|max:200',
-            'description' => 'required'
+            //'description' => 'required'
         ];
     }
 

@@ -11,7 +11,7 @@ class UpdateBrandRequest extends BaseFormRequest
     {
         return [
             'ordering' => 'required|integer',
-            'website'  => 'url'
+            //'website'  => 'url'
         ];
     }
 
