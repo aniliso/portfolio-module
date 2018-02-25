@@ -10,6 +10,7 @@ use Modules\Portfolio\Composers\Backend\BrandComposer;
 use Modules\Portfolio\Composers\Backend\CategoryComposer;
 use Modules\Portfolio\Events\Handlers\RegisterPortfolioSidebar;
 use Modules\Portfolio\Widgets\BrandsWidget;
+use Modules\Portfolio\Widgets\LatestWidget;
 
 class PortfolioServiceProvider extends ServiceProvider
 {
@@ -44,6 +45,7 @@ class PortfolioServiceProvider extends ServiceProvider
         view()->composer('portfolio::admin.portfolios.*', BrandComposer::class);
 
         \Widget::register('portfolio_brands', BrandsWidget::class);
+        \Widget::register('portfolio_latest', LatestWidget::class);
     }
 
     public function boot()

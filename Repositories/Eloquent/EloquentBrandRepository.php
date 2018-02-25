@@ -12,11 +12,6 @@ use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 
 class EloquentBrandRepository extends EloquentBaseRepository implements BrandRepository
 {
-    public function all()
-    {
-        return $this->model->with(['files', 'filesByZone', 'translations'])->get();
-    }
-
     public function create($data)
     {
         event($event = new BrandIsCreating($data));
