@@ -8,6 +8,6 @@ class BrandPresenter extends BasePresenter
 {
     protected $zone     = 'portfolioBrandImage';
     protected $slug     = 'slug';
-    protected $transKey = 'course::routes.brand.slug';
+    protected $transKey = 'portfolio::routes.brand.slug';
     protected $routeKey = 'brand.slug';
 }

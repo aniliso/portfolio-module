@@ -8,9 +8,11 @@ use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Traits\CanGetSidebarClassForModule;
 use Modules\Portfolio\Composers\Backend\BrandComposer;
 use Modules\Portfolio\Composers\Backend\CategoryComposer;
+use Modules\Portfolio\Entities\Portfolio;
 use Modules\Portfolio\Events\Handlers\RegisterPortfolioSidebar;
 use Modules\Portfolio\Widgets\BrandsWidget;
 use Modules\Portfolio\Widgets\LatestWidget;
+use Modules\Tag\Repositories\TagManager;
 
 class PortfolioServiceProvider extends ServiceProvider
 {
@@ -54,6 +56,8 @@ class PortfolioServiceProvider extends ServiceProvider
         $this->publishConfig('portfolio', 'config');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+
+        $this->app[TagManager::class]->registerNamespace(new Portfolio());
     }
 
     /**

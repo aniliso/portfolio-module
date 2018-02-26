@@ -5,18 +5,24 @@ namespace Modules\Portfolio\Entities;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Laracasts\Presenter\PresentableTrait;
+use Modules\Core\Traits\NamespacedEntity;
 use Modules\Media\Support\Traits\MediaRelation;
 use Carbon\Carbon;
 use Modules\Portfolio\Presenters\PortfolioPresenter;
+use Modules\Tag\Contracts\TaggableInterface;
+use Modules\Tag\Traits\TaggableTrait;
 
-class Portfolio extends Model
+class Portfolio extends Model implements TaggableInterface
 {
-    use Translatable, MediaRelation, PresentableTrait;
+    use Translatable, MediaRelation, PresentableTrait, TaggableTrait, NamespacedEntity;
 
     protected $table = 'portfolio__portfolios';
     public $translatedAttributes = ['title', 'slug', 'description', 'meta_title', 'meta_description'];
     protected $fillable = ['category_id', 'brand_id', 'title', 'slug', 'description', 'meta_title', 'meta_description', 'website', 'ordering', 'status', 'start_at', 'end_at', 'settings'];
     protected $dates = ['start_at', 'end_at'];
+    protected $with = ['brand', 'category'];
+
+    protected static $entityNamespace = 'asgardcms/portfolio';
 
     protected $presenter = PortfolioPresenter::class;
 
@@ -57,5 +63,10 @@ class Portfolio extends Model
     {
         $settings = json_decode($this->attributes['settings']);
         return $settings;
+    }
+
+    public function hasImage()
+    {
+        return $this->files()->exists();
     }
 }

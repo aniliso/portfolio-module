@@ -20,6 +20,8 @@ class EloquentPortfolioRepository extends EloquentBaseRepository implements Port
 
         event(new PortfolioWasCreated($model, $data));
 
+        $model->setTags(array_get($data, 'tags', []));
+
         return $model;
     }
 
@@ -30,6 +32,8 @@ class EloquentPortfolioRepository extends EloquentBaseRepository implements Port
         $model->update($event->getAttributes());
 
         event(new PortfolioWasUpdated($model, $data));
+
+        $model->setTags(array_get($data, 'tags', []));
 
         return $model;
     }

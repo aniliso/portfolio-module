@@ -72,6 +72,7 @@
             </div>
             <div class="box">
                 <div class="box-body">
+                    @tags('asgardcms/portfolio', $portfolio)
                     @mediaSingle('portfolioLogo', $portfolio, null, trans('portfolio::portfolios.form.logo'))
                 </div>
             </div>

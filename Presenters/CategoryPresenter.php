@@ -8,6 +8,6 @@ class CategoryPresenter extends BasePresenter
 {
     protected $zone     = 'portfolioCategoryImage';
     protected $slug     = 'slug';
-    protected $transKey = 'course::routes.category.slug';
+    protected $transKey = 'portfolio::routes.category.slug';
     protected $routeKey = 'brand.slug';
 }
