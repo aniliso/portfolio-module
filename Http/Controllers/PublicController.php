@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Portfolio\Repositories\CategoryRepository;
 use Modules\Portfolio\Repositories\PortfolioRepository;
+use Breadcrumbs;
 
 class PublicController extends BasePublicController
 {
@@ -18,11 +19,24 @@ class PublicController extends BasePublicController
      */
     private $category;
 
+    /**
+     * PublicController constructor.
+     * @param PortfolioRepository $portfolio
+     * @param CategoryRepository $category
+     */
     public function __construct(PortfolioRepository $portfolio, CategoryRepository $category)
     {
         parent::__construct();
         $this->portfolio = $portfolio;
         $this->category = $category;
+
+        /* Start Default Breadcrumbs */
+        if(!app()->runningInConsole()) {
+            Breadcrumbs::register('portfolio.index', function ($breadcrumbs) {
+                $breadcrumbs->push(trans('themes::portfolio.title.portfolios'), route('portfolio.index'));
+            });
+        }
+        /* End Default Breadcrumbs */
     }
 
     /**
@@ -57,6 +71,14 @@ class PublicController extends BasePublicController
             ->setImage($portfolio->present()->og_image)
             ->setUrl($portfolio->url);
 
+        /* Start Breadcrumbs */
+        Breadcrumbs::register('portfolio.view', function($breadcrumbs) use ($portfolio) {
+            $breadcrumbs->parent('portfolio.index');
+            if(isset($portfolio->category)) $breadcrumbs->push($portfolio->category->title, $portfolio->category->url);
+            $breadcrumbs->push($portfolio->title, $portfolio->url);
+        });
+        /* End Breadcrumbs */
+
         return view('portfolio::show', compact('portfolio'));
     }
 
@@ -73,6 +95,13 @@ class PublicController extends BasePublicController
                     ->meta()
                     ->setUrl($category->url)
                     ->addAlternates($category->present()->languages);
+
+        /* Start Breadcrumbs */
+        Breadcrumbs::register('portfolio.category', function($breadcrumbs) use ($category) {
+            $breadcrumbs->parent('portfolio.index');
+            $breadcrumbs->push($category->title, $category->url);
+        });
+        /* End Breadcrumbs */
 
         return view('portfolio::category', compact('category', 'portfolios'));
     }

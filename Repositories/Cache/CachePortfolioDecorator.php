@@ -29,4 +29,40 @@ class CachePortfolioDecorator extends BaseCacheDecorator implements PortfolioRep
                 }
             );
     }
+
+    /**
+     * Get the next post of the given post
+     * @param object $portfolio
+     * @return object
+     */
+    public function getNextOf($portfolio)
+    {
+        $portfolioId = $portfolio->id;
+
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.getNextOf.{$portfolioId}", $this->cacheTime,
+                function () use ($portfolio) {
+                    return $this->repository->getNextOf($portfolio);
+                }
+            );
+    }
+
+    /**
+     * Get the next post of the given post
+     * @param object $portfolio
+     * @return object
+     */
+    public function getPreviousOf($portfolio)
+    {
+        $portfolioId = $portfolio->id;
+
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.getPreviousOf.{$portfolioId}", $this->cacheTime,
+                function () use ($portfolio) {
+                    return $this->repository->getNextOf($portfolio);
+                }
+            );
+    }
 }

@@ -3,6 +3,7 @@
 namespace Modules\Portfolio\Presenters;
 
 use Modules\Core\Presenters\BasePresenter;
+use Modules\Portfolio\Repositories\PortfolioRepository;
 
 class PortfolioPresenter extends BasePresenter
 {
@@ -10,6 +11,14 @@ class PortfolioPresenter extends BasePresenter
     protected $slug     = 'slug';
     protected $transKey = 'portfolio::routes.portfolio.slug';
     protected $routeKey = 'portfolio.slug';
+    protected $portfolio;
+
+    public function __construct($entity)
+    {
+        parent::__construct($entity);
+
+        $this->portfolio   = app(PortfolioRepository::class);
+    }
 
     public function brandImage($width, $height, $mode, $quality)
     {
@@ -17,5 +26,15 @@ class PortfolioPresenter extends BasePresenter
             return \Imagy::getImage($file->filename, $this->zone, ['width' => $width, 'height' => $height, 'mode' => $mode, 'quality' => $quality]);
         }
         return false;
+    }
+
+    public function previous()
+    {
+        return $this->portfolio->getPreviousOf($this->entity);
+    }
+
+    public function next()
+    {
+        return $this->portfolio->getNextOf($this->entity);
     }
 }

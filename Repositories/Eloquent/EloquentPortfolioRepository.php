@@ -49,4 +49,26 @@ class EloquentPortfolioRepository extends EloquentBaseRepository implements Port
     {
         return $this->model->whereStatus(1)->orderBy('ordering', 'asc')->with('translations')->take($amount)->get();
     }
+
+    /**
+     * Get the previous post of the given post
+     * @param object $portfolio
+     * @return object
+     */
+    public function getPreviousOf($portfolio)
+    {
+        return $this->model->where('created_at', '<', $portfolio->created_at)
+            ->whereStatus(1)->orderBy('created_at', 'desc')->first();
+    }
+
+    /**
+     * Get the next post of the given post
+     * @param object $portfolio
+     * @return object
+     */
+    public function getNextOf($portfolio)
+    {
+        return $this->model->where('created_at', '>', $portfolio->created_at)
+            ->whereStatus(1)->first();
+    }
 }
