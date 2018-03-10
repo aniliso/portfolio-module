@@ -52,7 +52,9 @@
                                 {{ $portfolio->brand->title ?? 'Bulunamadı' }}
                             </td>
                             <td>
-                                {{ $portfolio->category->title }}
+                                @if(isset($portfolio->categories))
+                                {!! $portfolio->present()->categories !!}
+                                @endif
                             </td>
                             <td>
                                 <a href="{{ route('admin.portfolio.portfolio.edit', [$portfolio->id]) }}">

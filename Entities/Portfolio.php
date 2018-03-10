@@ -26,6 +26,11 @@ class Portfolio extends Model implements TaggableInterface
 
     protected $presenter = PortfolioPresenter::class;
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'portfolio__portfolio_categories');
+    }
+
     public function setStartAtAttribute($value)
     {
         return $this->attributes['start_at'] = Carbon::parse($value)->format('Y-m-d');

@@ -34,6 +34,9 @@ class PortfolioController extends AdminBaseController
         $this->portfolio = $portfolio;
         $this->category = $category;
         $this->brand = $brand;
+
+
+        view()->share('categoryLists', $this->category->all()->pluck('title', 'id')->toArray());
     }
 
     /**
@@ -67,12 +70,14 @@ class PortfolioController extends AdminBaseController
     public function store(CreatePortfolioRequest $request)
     {
         $portfolio = $this->portfolio->create($request->all());
-        if($portfolio && $request->has('category_id') && $request->has('brand_id')) {
-            $category = $this->category->find($request->get('category_id'));
-            $portfolio->category()->associate($category);
+        if($portfolio && $request->has('brand_id')) {
             $brand = $this->brand->find($request->get('brand_id'));
             $portfolio->brand()->associate($brand);
             $portfolio->save();
+        }
+
+        if ($request->get('categories')) {
+            $portfolio->categories()->sync($request->categories);
         }
 
         return redirect()->route('admin.portfolio.portfolio.index')
@@ -87,7 +92,8 @@ class PortfolioController extends AdminBaseController
      */
     public function edit(Portfolio $portfolio)
     {
-        return view('portfolio::admin.portfolios.edit', compact('portfolio'));
+        $portfolioCategories = $portfolio->categories()->get()->pluck('title', 'id')->toArray();
+        return view('portfolio::admin.portfolios.edit', compact('portfolio', 'portfolioCategories'));
     }
 
     /**
@@ -100,6 +106,10 @@ class PortfolioController extends AdminBaseController
     public function update(Portfolio $portfolio, UpdatePortfolioRequest $request)
     {
         $this->portfolio->update($portfolio, $request->all());
+
+        if ($request->get('categories')) {
+            $portfolio->categories()->sync($request->categories);
+        }
 
         return redirect()->route('admin.portfolio.portfolio.index')
             ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('portfolio::portfolios.title.portfolios')]));

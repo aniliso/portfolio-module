@@ -11,12 +11,17 @@ class UpdatePortfolioRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'category_id' => 'required|integer',
+            'categories'  => 'required',
             //'brand_id'    => 'required|integer',
             'ordering'    => 'required|integer',
             'start_at'    => 'required|date_format:d.m.Y',
             'end_at'      => 'required|date_format:d.m.Y'
         ];
+    }
+
+    public function attributes()
+    {
+        return trans('portfolio::portfolios.form');
     }
 
     public function translationRules()

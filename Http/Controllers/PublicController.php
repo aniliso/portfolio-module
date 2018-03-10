@@ -2,6 +2,7 @@
 
 namespace Modules\Portfolio\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Portfolio\Repositories\CategoryRepository;

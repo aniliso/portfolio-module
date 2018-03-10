@@ -20,23 +20,32 @@ class SitemapController extends BaseSitemapController
 
     public function index()
     {
+        ob_start();
         $portfolios = $this->portfolio->allTranslatedIn(locale());
         foreach ($portfolios as $portfolio) {
-            $images = [];
-            if($portfolio->hasImage())
-            {
-                $images[] = ['url' => url($portfolio->present()->firstImage(500,null,'resize',80)), 'title' => $portfolio->title];
+            $images = []; $i = 1;
+            if($portfolio->hasImage()) {
+                if($allImages = $portfolio->present()->images(500,null,'resize',80)) {
+                    if(is_array($allImages)) {
+                        foreach ($allImages as $image) {
+                            $images[] = ['url' => url($image), 'title' => $portfolio->title.' '.$i++];
+                        }
+                    }
+                } else {
+                    $images[] = ['url' => url($portfolio->present()->firstImage(500,null,'resize',80)), 'title' => $portfolio->title];
+                }
             }
             $this->sitemap->add(
                 $portfolio->url,
                 $portfolio->updated_at,
-                '0.9',
-                'weekly',
+                '1.0',
+                'daily',
                 $images,
                 null,
                 $portfolio->present()->languages('language', 'url', true)
             );
         }
+        ob_end_flush();
         return $this->sitemap->render('xml');
     }
 }

@@ -19,7 +19,7 @@ class Category extends Model
 
     public function portfolios()
     {
-        return $this->hasMany(Portfolio::class)->where('status', 1);
+        return $this->belongsToMany(Portfolio::class, 'portfolio__portfolio_categories');
     }
 
     /**

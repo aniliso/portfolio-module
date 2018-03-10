@@ -11,7 +11,7 @@ class CreatePortfolioRequest extends BaseFormRequest
     public function rules()
     {
         return [
-            'category_id' => 'required|integer',
+            'categories'  => 'required',
             //'brand_id'    => 'required|integer',
             'ordering'    => 'required|integer',
             'start_at'    => 'required|date_format:d.m.Y',

@@ -17,7 +17,7 @@ return [
     ],
     'form'             => [
         'brand_id'         => 'Marka',
-        'category_id'      => 'Kategori',
+        'categories'       => 'Kategori',
         'title'            => 'Başlık',
         'slug'             => 'URL Yolu',
         'description'      => 'Açıklama',

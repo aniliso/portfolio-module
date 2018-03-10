@@ -15,7 +15,22 @@ return [
     ],
     'table' => [
     ],
-    'form' => [
+    'form'             => [
+        'brand_id'         => 'Brand',
+        'categories'       => 'Categories',
+        'title'            => 'Title',
+        'slug'             => 'Slug',
+        'description'      => 'Description',
+        'website'          => 'Portfolio Website',
+        'ordering'         => 'Ordering',
+        'status'           => 'Status',
+        'start_at'         => 'Starting At',
+        'end_at'           => 'End At',
+        'meta_data'        => 'Meta Data',
+        'meta_title'       => 'Meta Title',
+        'meta_description' => 'Meta Description',
+        'images'           => 'Images',
+        'logo'             => 'Logo'
     ],
     'messages' => [
     ],

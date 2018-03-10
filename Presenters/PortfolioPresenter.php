@@ -20,6 +20,14 @@ class PortfolioPresenter extends BasePresenter
         $this->portfolio   = app(PortfolioRepository::class);
     }
 
+    public function categories($glue=', ')
+    {
+        return $this->entity->categories()->get()->map(function($category){
+            $link = '<a href="'.$category->url.'">'.$category->title.'</a>';
+            return $link;
+        })->implode($glue);
+    }
+
     public function brandImage($width, $height, $mode, $quality)
     {
         if($file = $this->entity->files()->where('zone', 'portfolioLogo')->first()) {

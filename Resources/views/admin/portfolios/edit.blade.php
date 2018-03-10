@@ -43,7 +43,15 @@
             @includeIf('portfolio::admin.portfolios.partials.settings')
             <div class="box">
                 <div class="box-body">
-                    {!! Form::normalSelect('category_id', trans('portfolio::categories.title.categories'), $errors, $selectCategories, $portfolio->category->id) !!}
+                    <div class="form-group{{ $errors->has("categories") ? ' has-error' : '' }}">
+                        {!! Form::label('categories', trans('portfolio::categories.title.categories')) !!}
+                        <select name="categories[]" class="select2" multiple="" id="multi-select" style="width: 100%;">
+                            @foreach($categoryLists as $key => $categoryList)
+                                <option value="{{ $key }}" @if(array_key_exists($key, $portfolioCategories) || @in_array($key, old('categories'))) selected @endif>{{ $categoryList }}</option>
+                            @endforeach
+                        </select>
+                        {!! $errors->first("categories", '<span class="help-block">:message</span>') !!}
+                    </div>
 
                     {!! Form::normalSelect('brand_id', trans('portfolio::brands.title.brands'), $errors, [''=>'Seçiniz']+$selectBrands, $portfolio->brand->id ?? null) !!}
 
@@ -103,6 +111,7 @@
     </script>
     <script>
         $( document ).ready(function() {
+            $('.select2').select2();
             $('input[type="checkbox"].flat-blue, input[type="radio"].flat-blue').iCheck({
                 checkboxClass: 'icheckbox_flat-blue',
                 radioClass: 'iradio_flat-blue'
