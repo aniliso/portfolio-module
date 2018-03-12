@@ -89,7 +89,7 @@ class PublicController extends BasePublicController
 
         if(is_null($category)) abort(404);
 
-        $portfolios = $category->portfolios()->get();
+        $portfolios = $category->portfolios()->orderBy('ordering')->get();
 
         $this->seo()->setTitle($category->title)
                     ->setDescription($category->title)
