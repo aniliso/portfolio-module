@@ -6,6 +6,7 @@ return [
       'slug'  => 'portfoy/kategori/{slug}'
   ],
   'portfolio' => [
+      'group' => 'portfoy/group/{id}',
       'index' => 'portfoyler',
       'slug'  => 'portfoy/{slug}'
   ],

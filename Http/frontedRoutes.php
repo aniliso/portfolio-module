@@ -4,6 +4,10 @@ use Illuminate\Routing\Router;
 
 /** @var Router $router */
 $router->group(['prefix' =>''], function (Router $router) {
+    $router->get(LaravelLocalization::transRoute('portfolio::routes.portfolio.group'), [
+        'as'         => 'portfolio.group',
+        'uses'       => 'PublicController@group'
+    ]);
     $router->get(LaravelLocalization::transRoute('portfolio::routes.category.slug'), [
         'as'         => 'portfolio.category.slug',
         'uses'       => 'PublicController@categoryView'

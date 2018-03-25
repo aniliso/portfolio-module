@@ -2,7 +2,6 @@
 
 namespace Modules\Portfolio\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Portfolio\Repositories\CategoryRepository;
@@ -105,5 +104,17 @@ class PublicController extends BasePublicController
         /* End Breadcrumbs */
 
         return view('portfolio::category', compact('category', 'portfolios'));
+    }
+
+    public function group($id)
+    {
+        if(!array_key_exists($id, trans('themes::portfolio.settings.groups'))) abort(404);
+
+        $portfolios = $this->portfolio->all()->where('settings.group', $id);
+
+        $this->seo()->setTitle(trans('themes::portfolio.settings.groups.'.$id))
+                    ->setDescription(trans('themes::portfolio.settings.groups.'.$id));
+
+        return view('portfolio::group', compact('portfolios'));
     }
 }

@@ -1,12 +1,17 @@
 <?php
 
 return [
-  'portfolio' => [
+    'category' => [
+        'index' => 'portfolio/categories',
+        'slug'  => 'portfolio/category/{slug}'
+    ],
+    'portfolio' => [
+      'group' => 'portfoy/group/{id}',
       'index' => 'portfolio/index',
       'slug'  => 'portfolio/{slug}'
-  ],
-  'brand' => [
+    ],
+    'brand' => [
       'index' => 'portfolio/brand',
       'slug'  => 'portfolio/brand/{slug}'
-  ]
+    ]
 ];
