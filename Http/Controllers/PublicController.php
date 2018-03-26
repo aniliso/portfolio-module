@@ -110,7 +110,9 @@ class PublicController extends BasePublicController
     {
         if(!array_key_exists($id, trans('themes::portfolio.settings.groups'))) abort(404);
 
-        $portfolios = $this->portfolio->all()->where('settings.group', $id);
+        $portfolios = $this->portfolio->all()->filter(function($value, $key) use ($id){
+            return in_array($id, $value->settings->groups ?? []);
+        });
 
         $this->seo()->setTitle(trans('themes::portfolio.settings.groups.'.$id))
                     ->setDescription(trans('themes::portfolio.settings.groups.'.$id));

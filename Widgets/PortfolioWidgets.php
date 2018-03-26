@@ -29,9 +29,8 @@ class PortfolioWidgets
 
     public function groups($limit=10, $view='groups') {
         $groups = $this->portfolio->all()
-            ->where('settings.group', '!=', '')
-            ->groupBy('settings.group')
-            ->sort()
+            ->sortBy('ordering')
+            ->groupBy('settings.groups')
             ->take($limit);
         return view('portfolio::widgets.'.$view, compact('groups'));
     }
