@@ -48,7 +48,9 @@ class PublicController extends BasePublicController
         $portfolios = $this->portfolio->all()->sortBy('ordering');
 
         $this->seo()->setTitle(trans('themes::portfolio.title.meta_title'))
-                    ->setDescription(trans('themes::portfolio.title.meta_description'));
+            ->setDescription(trans('themes::portfolio.title.meta_description'))
+            ->meta()
+            ->setUrl(route('portfolio.index'));
 
         return view('portfolio::index', compact('portfolios'));
     }
@@ -60,10 +62,10 @@ class PublicController extends BasePublicController
         if(is_null($portfolio)) abort(404);
 
         $this->seo()->setTitle($portfolio->title)
-                    ->setDescription($portfolio->meta_description)
-                    ->meta()
-                    ->setUrl($portfolio->url)
-                    ->addAlternates($portfolio->present()->languages);
+            ->setDescription($portfolio->meta_description)
+            ->meta()
+            ->setUrl($portfolio->url)
+            ->addAlternates($portfolio->present()->languages);
 
         $this->seoGraph()
             ->setTitle($portfolio->title)
@@ -91,10 +93,10 @@ class PublicController extends BasePublicController
         $portfolios = $category->portfolios()->orderBy('ordering')->get();
 
         $this->seo()->setTitle($category->title)
-                    ->setDescription($category->title)
-                    ->meta()
-                    ->setUrl($category->url)
-                    ->addAlternates($category->present()->languages);
+            ->setDescription($category->title)
+            ->meta()
+            ->setUrl($category->url)
+            ->addAlternates($category->present()->languages);
 
         /* Start Breadcrumbs */
         Breadcrumbs::register('portfolio.category', function($breadcrumbs) use ($category) {
@@ -115,7 +117,9 @@ class PublicController extends BasePublicController
         });
 
         $this->seo()->setTitle(trans('themes::portfolio.settings.groups.'.$id))
-                    ->setDescription(trans('themes::portfolio.settings.groups.'.$id));
+            ->setDescription(trans('themes::portfolio.settings.groups.'.$id))
+            ->meta()
+            ->setUrl(route('portfolio.group', $id));
 
         return view('portfolio::group', compact('portfolios'));
     }

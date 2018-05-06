@@ -74,4 +74,19 @@ class Portfolio extends Model implements TaggableInterface
     {
         return $this->files()->exists();
     }
+
+    public function scopeActivated($query)
+    {
+        return $query->whereStatus(1);
+    }
+
+    public function scopeWithTransRelated($query)
+    {
+        return $query->with(['translations','category','brand']);
+    }
+
+    public function scopeWithRelated($query)
+    {
+        return $query->with(['category','brand']);
+    }
 }

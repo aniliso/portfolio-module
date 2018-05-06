@@ -22,7 +22,7 @@ class PortfolioPresenter extends BasePresenter
 
     public function categories($glue=', ')
     {
-        return $this->entity->categories()->get()->map(function($category){
+        return $this->entity->categories->map(function($category){
             $link = '<a href="'.$category->url.'">'.$category->title.'</a>';
             return $link;
         })->implode($glue);

@@ -2,6 +2,7 @@
 
 namespace Modules\Portfolio\Repositories\Eloquent;
 
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Portfolio\Events\Portfolio\PortfolioIsCreating;
 use Modules\Portfolio\Events\Portfolio\PortfolioIsUpdating;
 use Modules\Portfolio\Events\Portfolio\PortfolioWasCreated;
@@ -12,6 +13,27 @@ use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 
 class EloquentPortfolioRepository extends EloquentBaseRepository implements PortfolioRepository
 {
+    public function all()
+    {
+        if (method_exists($this->model, 'translations')) {
+            return $this->model->withTransRelated()->orderBy('created_at', 'DESC')->get();
+        }
+
+        return $this->model->orderBy('created_at', 'DESC')->withRelated()->get();
+    }
+
+    public function findBySlug($slug)
+    {
+        if (method_exists($this->model, 'translations')) {
+            return $this->model->whereHas('translations', function (Builder $q) use ($slug) {
+                $q->where('slug', $slug);
+            })->withTransRelated()->first();
+        }
+
+        return $this->model->where('slug', $slug)->withRelated()->first();
+    }
+
+
     public function create($data)
     {
         event($event = new PortfolioIsCreating($data));
@@ -47,7 +69,7 @@ class EloquentPortfolioRepository extends EloquentBaseRepository implements Port
 
     public function latest($amount = 10)
     {
-        return $this->model->whereStatus(1)->orderBy('ordering', 'asc')->with('translations')->take($amount)->get();
+        return $this->model->whereStatus(1)->orderBy('ordering', 'asc')->withTransRelated()->take($amount)->get();
     }
 
     /**
