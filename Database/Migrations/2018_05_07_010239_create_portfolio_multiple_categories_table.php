@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePortfolioCategoriesTable extends Migration
+class CreatePortfolioMultipleCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -37,8 +37,8 @@ class CreatePortfolioCategoriesTable extends Migration
             Schema::disableForeignKeyConstraints();
             if(Schema::hasColumn('portfolio__portfolios', 'category_id')) {
                 Schema::table('portfolio__portfolios', function (Blueprint $table){
-                   $table->dropForeign('portfolio__portfolios_category_id_foreign');
-                   $table->dropColumn('category_id');
+                    $table->dropForeign('portfolio__portfolios_category_id_foreign');
+                    $table->dropColumn('category_id');
                 });
             }
             Schema::enableForeignKeyConstraints();
