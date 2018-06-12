@@ -27,6 +27,6 @@ class Category extends Model
      */
     public function getUrlAttribute()
     {
-        return route('portfolio.category.slug', [$this->slug]);
+        return \LaravelLocalization::getLocalizedURL(locale(), route('portfolio.category.slug', [$this->slug]));
     }
 }

@@ -56,7 +56,7 @@ class Portfolio extends Model implements TaggableInterface
      */
     public function getUrlAttribute()
     {
-        return route('portfolio.slug', [$this->slug]);
+        return \LaravelLocalization::getLocalizedURL(locale(), route('portfolio.slug', [$this->slug]));
     }
 
     public function setSettingsAttribute($value)
