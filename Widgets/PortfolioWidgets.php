@@ -22,9 +22,9 @@ class PortfolioWidgets
         return view('portfolio::widgets.latest', compact('portfolios'));
     }
 
-    public function brands($limit=10) {
+    public function brands($limit=10, $view="brand") {
         $brands = $this->brand->all()->where('status', 1)->take($limit)->sortBy('ordering');
-        return view('portfolio::widgets.brand', compact('brands'));
+        return view('portfolio::widgets.'.$view, compact('brands'));
     }
 
     public function groups($limit=10, $view='groups') {
