@@ -5,6 +5,7 @@ namespace Modules\Portfolio\Entities;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Laracasts\Presenter\PresentableTrait;
+use Modules\Core\Models\Scopes\ActiveScope;
 use Modules\Core\Traits\NamespacedEntity;
 use Modules\Media\Support\Traits\MediaRelation;
 use Carbon\Carbon;
@@ -21,6 +22,9 @@ class Portfolio extends Model implements TaggableInterface
     protected $fillable = ['category_id', 'brand_id', 'title', 'slug', 'description', 'meta_title', 'meta_description', 'website', 'ordering', 'status', 'start_at', 'end_at', 'settings'];
     protected $dates = ['start_at', 'end_at'];
     protected $with = ['brand', 'category'];
+    protected $casts = [
+      'settings' => 'object'
+    ];
 
     protected static $entityNamespace = 'asgardcms/portfolio';
 
@@ -51,33 +55,14 @@ class Portfolio extends Model implements TaggableInterface
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
-    /**
-     * @return string
-     */
     public function getUrlAttribute()
     {
-        return route('portfolio.slug', [$this->slug]);
-    }
-
-    public function setSettingsAttribute($value)
-    {
-        return $this->attributes['settings'] = json_encode($value);
-    }
-
-    public function getSettingsAttribute()
-    {
-        $settings = json_decode($this->attributes['settings']);
-        return $settings;
+        return localize_trans_url(locale(), 'portfolio::routes.portfolio.slug', ['slug'=>$this->slug]);
     }
 
     public function hasImage()
     {
         return $this->files()->exists();
-    }
-
-    public function scopeActivated($query)
-    {
-        return $query->whereStatus(1);
     }
 
     public function scopeWithTransRelated($query)
@@ -88,5 +73,12 @@ class Portfolio extends Model implements TaggableInterface
     public function scopeWithRelated($query)
     {
         return $query->with(['category','brand']);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new ActiveScope());
     }
 }

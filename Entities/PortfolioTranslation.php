@@ -10,8 +10,15 @@ class PortfolioTranslation extends Model
     protected $fillable = ['title', 'slug', 'description', 'meta_title', 'meta_description'];
     protected $table = 'portfolio__portfolio_translations';
 
+    protected $appends = ['url'];
+
     public function getTitleAttribute()
     {
         return $this->attributes['meta_title'] ? $this->attributes['meta_title'] : $this->attributes['title'];
+    }
+
+    public function getUrlAttribute()
+    {
+        return localize_trans_url($this->locale, 'portfolio::routes.portfolio.slug', ['slug'=>$this->slug]);
     }
 }

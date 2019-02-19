@@ -22,11 +22,8 @@ class Category extends Model
         return $this->belongsToMany(Portfolio::class, 'portfolio__portfolio_categories');
     }
 
-    /**
-     * @return string
-     */
     public function getUrlAttribute()
     {
-        return route('portfolio.category.slug', [$this->slug]);
+        return localize_trans_url(locale(), 'portfolio::routes.category.slug', ['slug'=>$this->slug]);
     }
 }

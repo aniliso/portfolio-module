@@ -21,4 +21,9 @@ class Brand extends Model
     {
         return $this->hasMany(Portfolio::class);
     }
+
+    public function getUrlAttribute()
+    {
+        return localize_trans_url(locale(), 'portfolio::routes.brand.slug', ['slug'=>$this->slug]);
+    }
 }
