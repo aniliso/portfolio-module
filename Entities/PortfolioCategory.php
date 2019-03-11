@@ -8,8 +8,6 @@ class PortfolioCategory extends Model
     protected $table    = 'portfolio__portfolio_categories';
     protected $fillable = ['portfolio_id', 'category_id'];
 
-    protected $appends = ['url'];
-
     public function getUrlAttribute()
     {
         return localize_trans_url($this->locale, 'portfolio::routes.category.slug', ['slug'=>$this->slug]);
