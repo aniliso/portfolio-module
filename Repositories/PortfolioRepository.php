@@ -6,6 +6,7 @@ use Modules\Core\Repositories\BaseRepository;
 
 interface PortfolioRepository extends BaseRepository
 {
+    public function getBySetting($option, $limit);
     /**
      * @param int $amount
      * @return mixed

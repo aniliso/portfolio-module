@@ -47,6 +47,7 @@ class PortfolioServiceProvider extends ServiceProvider
         \Widget::register('portfolioBrands', '\Modules\Portfolio\Widgets\PortfolioWidgets@brands');
         \Widget::register('portfolioLatest', '\Modules\Portfolio\Widgets\PortfolioWidgets@latest');
         \Widget::register('portfolioGroups', '\Modules\Portfolio\Widgets\PortfolioWidgets@groups');
+        \Widget::register('portfolioCategories', '\Modules\Portfolio\Widgets\PortfolioWidgets@categories');
     }
 
     public function boot()

@@ -1,6 +1,7 @@
 <?php namespace Modules\Portfolio\Widgets;
 
 use Modules\Portfolio\Repositories\BrandRepository;
+use Modules\Portfolio\Repositories\CategoryRepository;
 use Modules\Portfolio\Repositories\PortfolioRepository;
 
 class PortfolioWidgets
@@ -10,15 +11,20 @@ class PortfolioWidgets
      * @var BrandRepository
      */
     private $brand;
+    /**
+     * @var CategoryRepository
+     */
+    private $category;
 
-    public function __construct(PortfolioRepository $portfolio, BrandRepository $brand)
+    public function __construct(PortfolioRepository $portfolio, BrandRepository $brand, CategoryRepository $category)
     {
         $this->portfolio = $portfolio;
         $this->brand = $brand;
+        $this->category = $category;
     }
 
-    public function latest($limit=10) {
-        $portfolios = $this->portfolio->latest($limit);
+    public function latest($limit=10, $option='') {
+        $portfolios = $this->portfolio->getBySetting($option, $limit);
         return view('portfolio::widgets.latest', compact('portfolios'));
     }
 
@@ -36,5 +42,10 @@ class PortfolioWidgets
             ->groupBy('settings.groups')
             ->take($limit);
         return view('portfolio::widgets.'.$view, compact('groups'));
+    }
+
+    public function categories($view='categories', $limit=20) {
+        $categories = $this->category->all()->sortBy('ordering')->take($limit);
+        return view('portfolio::widgets.'.$view, compact('categories'));
     }
 }

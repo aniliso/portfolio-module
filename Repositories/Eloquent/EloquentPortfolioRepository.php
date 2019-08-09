@@ -93,4 +93,10 @@ class EloquentPortfolioRepository extends EloquentBaseRepository implements Port
         return $this->model->where('created_at', '>', $portfolio->created_at)
             ->whereStatus(1)->first();
     }
+
+    public function getBySetting($option, $limit)
+    {
+        return $this->model->where($option, 1)
+                           ->take($limit)->get();
+    }
 }

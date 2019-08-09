@@ -65,4 +65,15 @@ class CachePortfolioDecorator extends BaseCacheDecorator implements PortfolioRep
                 }
             );
     }
+
+    public function getBySetting($option, $limit)
+    {
+        return $this->cache
+            ->tags([$this->entityName, 'global'])
+            ->remember("{$this->locale}.{$this->entityName}.getBySetting.{$option}.{$limit}", $this->cacheTime,
+                function () use ($option, $limit) {
+                    return $this->repository->getBySetting($option, $limit);
+                }
+            );
+    }
 }
