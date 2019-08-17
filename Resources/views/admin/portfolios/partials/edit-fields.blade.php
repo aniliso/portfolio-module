@@ -3,7 +3,8 @@
 
     {!! Form::i18nInput('slug', trans('portfolio::portfolios.form.slug'), $errors, $lang, $portfolio, ['data-slug'=>'target']) !!}
 
-    @editor('description', trans('portfolio::portfolios.form.description'), old("{$lang}.description", $portfolio->description), $lang)
+    <?php $old = $portfolio->hasTranslation($lang) ? $portfolio->translate($lang)->description : '' ?>
+    @editor('description', trans('portfolio::portfolios.form.description'), old("{$lang}.description", $old), $lang)
 </div>
 
 <div class="box-body">
