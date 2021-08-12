@@ -23,7 +23,16 @@ class PortfolioWidgets
         $this->category = $category;
     }
 
-    public function latest($limit=10, $option='') {
+    public function latest($limit=10, $view="latest")
+    {
+        if($portfolios = $this->portfolio->latest($limit)) {
+            $categories = $this->category->all();
+            return view('portfolio::widgets.'.$view, compact('portfolios', 'categories'));
+        }
+        return null;
+    }
+
+    public function getBySetting($limit=10, $option='') {
         $portfolios = $this->portfolio->getBySetting($option, $limit);
         return view('portfolio::widgets.latest', compact('portfolios'));
     }

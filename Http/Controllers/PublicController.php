@@ -18,6 +18,10 @@ class PublicController extends BasePublicController
      * @var CategoryRepository
      */
     private $category;
+    /**
+     * @var int
+     */
+    private $perPage;
 
     /**
      * PublicController constructor.
@@ -29,6 +33,8 @@ class PublicController extends BasePublicController
         parent::__construct();
         $this->portfolio = $portfolio;
         $this->category = $category;
+        
+        $this->perPage = 9;
 
         /* Start Default Breadcrumbs */
         if(!app()->runningInConsole()) {
@@ -45,7 +51,7 @@ class PublicController extends BasePublicController
      */
     public function portfolioIndex()
     {
-        $portfolios = $this->portfolio->all()->sortBy('ordering');
+        $portfolios = $this->portfolio->paginate($this->perPage);
 
         $this->seo()->setTitle(trans('themes::portfolio.title.meta_title'))
             ->setDescription(trans('themes::portfolio.title.meta_description'))

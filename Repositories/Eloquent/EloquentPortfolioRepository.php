@@ -13,6 +13,15 @@ use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 
 class EloquentPortfolioRepository extends EloquentBaseRepository implements PortfolioRepository
 {
+    public function paginate($perPage = 15)
+    {
+        if (method_exists($this->model, 'translations')) {
+            return $this->model->with('translations')->orderBy('created_at', 'DESC')->paginate($perPage);
+        }
+
+        return $this->model->orderBy('ordering', 'ASC')->paginate($perPage);
+    }
+
     public function all()
     {
         if (method_exists($this->model, 'translations')) {
