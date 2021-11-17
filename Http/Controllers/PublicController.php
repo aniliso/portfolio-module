@@ -52,13 +52,14 @@ class PublicController extends BasePublicController
     public function portfolioIndex()
     {
         $portfolios = $this->portfolio->paginate($this->perPage);
+        $categories = $this->category->all();
 
         $this->seo()->setTitle(trans('themes::portfolio.title.meta_title'))
             ->setDescription(trans('themes::portfolio.title.meta_description'))
             ->meta()
             ->setUrl(route('portfolio.index'));
 
-        return view('portfolio::index', compact('portfolios'));
+        return view('portfolio::index', compact('portfolios', 'categories'));
     }
 
     public function portfolioView($slug)
@@ -97,6 +98,7 @@ class PublicController extends BasePublicController
         if(is_null($category)) abort(404);
 
         $portfolios = $category->portfolios()->orderBy('ordering')->paginate($this->perPage);
+        $categories = $this->category->all();
 
         $this->seo()->setTitle($category->title)
             ->setDescription($category->title)
@@ -111,7 +113,7 @@ class PublicController extends BasePublicController
         });
         /* End Breadcrumbs */
 
-        return view('portfolio::category', compact('category', 'portfolios'));
+        return view('portfolio::category', compact('category', 'portfolios', 'categories'));
     }
 
     public function group($id)
